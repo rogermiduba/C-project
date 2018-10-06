@@ -2,23 +2,26 @@
 #include <iostream>
 using namespace std;
 
-void Input_data(Cantidades[3][3], Pesos[3][3])
+void Input_data(int Cantidades[3][3], float Pesos[3][3])
 {
-    float cantidadpolosjersey, cantidadpolospique,cantidadpolosfranela,cantidadcamisasjersey,cantidadcamisaspique,cantidadcamisasfranela,cantidadcuellosjersey, cantidadcuellospique,cantidadcuellosfranela,kgpolosjersey,kgpolospique,kgpolosfranela,kgcamisasjersey,kgcamisaspique,kgcamisasfranela,kgcuellosjersey, kgcuellospique,kgcuellosfranela;
-
-cout<< "Polos Jersey:";cin >> cantidadpolosjersey; cout << "kg/prenda:";cin >> kgpolosjersey;
-cout<< "Camisas Jersey:";cin >> cantidadcamisasjersey; cout << "Kg/prenda:";cin >> kgcamisasjersey;
-cout<< "Cuellos Jersey:";cin >> cantidadcuellosjersey; cout << "Kg/prenda";cin >> kgcuellosjersey;
-cout<< endl;
-cout<< "Polos Pique:";cin >> cantidadpolospique; cout << "Kg/prenda:";cin >> kgpolospique;
-cout<< "Camisas Pique:";cin >> cantidadcamisaspique; cout << "Kg/prenda:";cin >> kgcamisaspique;
-cout<< "Cuellos Pique:";cin >> cantidadcuellospique; cout << "Kg/prenda:";cin >> kgcuellospique;
-cout <<endl;
-cout<< "Polos Franela:";cin >> cantidadpolosfranela; cout << "Kg/prenda:";cin >> kgpolosfranela;
-cout<< "Camisas Franela:";cin >> cantidadcamisasfranela; cout << "Kg/prenda:";cin >> kgcamisasfranela;
-cout<< "Cuellos Franela:";cin >> cantidadcuellosfranela; cout << "Kg/prenda:";cin >> kgcuellosfranela;
-cout << endl;
+    cout<< "Polos Jersey: ";cin >> Cantidades[0][0]; cout << "Peso(kg)/prenda - Polos Jersey: ";cin >> Pesos[0][0];
+    cout<< "Camisas Jersey: ";cin >> Cantidades[0][1]; cout << "Peso(kg)/prenda - Camisas Jersey: ";cin >> Pesos[0][1];
+    cout<< "Cuellos Jersey: ";cin >> Cantidades[0][2]; cout << "Peso(kg)/prenda - Cuellos Jersey" ;cin >> Pesos[0][2];
+    cout<< endl;
+    cout<< "Polos Pique: ";cin >> Cantidades[1][0]; cout << "Peso(kg)/prenda - Polos Pique: ";cin >> Pesos[1][0];
+    cout<< "Camisas Pique: ";cin >> Cantidades[1][1]; cout << "Peso(kg)/prenda - Camisas Pique: ";cin >> Pesos[1][1];
+    cout<< "Cuellos Pique: ";cin >> Cantidades[1][2]; cout << "Peso(kg)/prenda - Cuellos Pique: ";cin >> Pesos[1][2];
+    cout <<endl;
+    cout<< "Polos Franela: ";cin >> Cantidades[2][0]; cout << "Peso(kg)/prenda - Polos Franela: ";cin >> Pesos[2][0];
+    cout<< "Camisas Franela: ";cin >> Cantidades[2][1]; cout << "Peso(kg)/prenda - Camisas Franela: ";cin >> Pesos[2][1];
+    cout<< "Cuellos Franela: ";cin >> Cantidades[2][2]; cout << "Peso(kg)/prenda - Cuellos Franela: ";cin >> Pesos[2][2];
+    cout << endl;
+    
+    return;
 }
+
+
+
 
 int main()
 {
@@ -26,17 +29,10 @@ int main()
         {0,0,0},//Jersey
         {0,0,0},//Pique
         {0,0,0} //Franela
-//{Polos,Camisas,Cuellos}
-    };
-    
-    
-    float Pesos[3/*Telas*/][3/*Prendas*/] = {
-        {0,0,0},//Jersey
-        {0,0,0},//Pique
-        {0,0,0} //Franela
-//{Polos,Camisas,Cuellos}
-    };
-    
+        //{Polos,Camisas,Cuellos}
+    }; 
+    float Pesos[3/*Telas*/][3/*Prendas*/];
+    Input_data(Cantidades,Pesos);
     
     return 0;
 }
