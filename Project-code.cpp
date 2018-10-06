@@ -1,6 +1,12 @@
 //Proyecto
 #include <iostream>
 using namespace std;
+
+void Input_data(Cantidades[3][3], Pesos[3][3])
+{
+    
+}
+
 int main()
 {
     int Cantidades[3/*Telas*/][3/*Prendas*/] = {
