@@ -6,7 +6,7 @@ void Input_data(int Cantidades[3][3], float Pesos[3][3])
 {
     cout<< "Polos Jersey: ";cin >> Cantidades[0][0]; cout << "Peso(kg)/prenda - Polos Jersey: ";cin >> Pesos[0][0];
     cout<< "Camisas Jersey: ";cin >> Cantidades[0][1]; cout << "Peso(kg)/prenda - Camisas Jersey: ";cin >> Pesos[0][1];
-    cout<< "Cuellos Jersey: ";cin >> Cantidades[0][2]; cout << "Peso(kg)/prenda - Cuellos Jersey" ;cin >> Pesos[0][2];
+    cout<< "Cuellos Jersey: ";cin >> Cantidades[0][2]; cout << "Peso(kg)/prenda - Cuellos Jersey: " ;cin >> Pesos[0][2];
     cout<< endl;
     cout<< "Polos Pique: ";cin >> Cantidades[1][0]; cout << "Peso(kg)/prenda - Polos Pique: ";cin >> Pesos[1][0];
     cout<< "Camisas Pique: ";cin >> Cantidades[1][1]; cout << "Peso(kg)/prenda - Camisas Pique: ";cin >> Pesos[1][1];
