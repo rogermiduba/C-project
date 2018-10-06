@@ -8,7 +8,7 @@ int main()
         {0,0,0},//Pique
         {0,0,0} //Franela
 //{Polos,Camisas,Cuellos}
-    }
+    };
     
     
     float Pesos[3/*Telas*/][3/*Prendas*/] = {
@@ -16,7 +16,7 @@ int main()
         {0,0,0},//Pique
         {0,0,0} //Franela
 //{Polos,Camisas,Cuellos}
-    }
+    };
     
     
     return 0;
