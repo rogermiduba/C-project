@@ -1,1 +1,10 @@
 // Proyecto de textil
+
+Cantidades[3/*Telas*/][3/*Prendas*/] = {
+        {0,0,0},//Jersey
+        {0,0,0},//Pique
+        {0,0,0} //Franela
+//{Polos,Camisas,Cuellos}
+    }
+
+
