@@ -1,5 +1,6 @@
 //Proyecto
 #include <iostream>
+#include <iomanip>
 using namespace std;
 
 void Input_data(int Cantidades[3][3], float Pesos[3][3], float PesoTotal[3][3])
@@ -17,13 +18,9 @@ void Input_data(int Cantidades[3][3], float Pesos[3][3], float PesoTotal[3][3])
     cout<< "Cuellos Franela: ";cin >> Cantidades[2][2]; cout << "Peso(kg)/prenda - Cuellos Franela: ";cin >> Pesos[2][2];
     cout << endl;
     
-    float PesoTotal[3/*Telas*/][3/*Prendas*/] = {
-        {Cantidades[0][0]*Pesos[0][0],Cantidades[0][1]*Pesos[0][1],Cantidades[0][2]*Pesos[0][2]},//Jersey
-        {Cantidades[1][0]*Pesos[1][0],Cantidades[1][1]*Pesos[1][1],Cantidades[1][2]*Pesos[1][2]},//Pique
-        {Cantidades[2][0]*Pesos[2][0],Cantidades[2][1]*Pesos[2][1],Cantidades[2][2]*Pesos[2][2]} //Franela
-        //{Polos,Camisas,Cuellos}
-    }; 
-    
+    for(int i=0;i<3;i++)
+        for(int j=0;j<3;j++)
+            PesoTotal[i][j]=Cantidades[i][j]*Pesos[i][j];
     return;
 }
 
@@ -41,6 +38,8 @@ int main()
     float Pesos[3/*Telas*/][3/*Prendas*/];
     float PesoTotal[3][3];
     Input_data(Cantidades,Pesos,PesoTotal);
+   
+    }
     
     return 0;
 }
