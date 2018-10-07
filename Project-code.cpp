@@ -23,21 +23,11 @@ float Input_data(int Cantidades[3][3], float Pesos[3][3], float PesoTotal[3][3])
     for(int i=0;i<3;i++)
         for(int j=0;j<3;j++)
             PesoTotal[i][j]=Cantidades[i][j]*Pesos[i][j];
-
-    for(int i=0;i<3;i++){
-        for(int j=0;j<3;j++){
-            cout << setw(5) << PesoTotal[i][j];}
-            cout << endl;}
-
+    
     return PesoTotal[3][3];
 }
 
 float Cantidad_materia_prima(float PesoTotal[3][3]){
- 
-  for(int i=0;i<3;i++){
-    for (int j=0;j<3;j++){
-      cout << setw(5) << PesoTotal[i][j];}
-      cout << endl;}
 
   float MateriaPrimaJersey=0,MateriaPrimaPique=0, MateriaPrimaFranela=0;
   
@@ -52,7 +42,7 @@ float Cantidad_materia_prima(float PesoTotal[3][3]){
 
   cout << MateriaPrimaJersey/0.7 << endl ;
   cout << MateriaPrimaPique/0.5 << endl ;
-  cout << MateriaPrimaFranela/0.3 << endl;
+  cout << MateriaPrimaFranela/0.3 << endl ;
 
   return MateriaPrimaJersey, MateriaPrimaPique, MateriaPrimaFranela;
 }
