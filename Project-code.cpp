@@ -35,6 +35,6 @@ int main()
     float Pesos[3/*Telas*/][3/*Prendas*/];
     float PesoTotal[3][3];
     Input_data(Cantidades,Pesos,PesoTotal);
-    }
+    
     return 0;
 }
