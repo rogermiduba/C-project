@@ -5,7 +5,7 @@ using namespace std;
 
 const int jersey = 0; const int pique = 1; const int franela = 2;
 
-float Input_data(int Cantidades[3][3], float Pesos[3][3], float PesoTotal[3][3])
+void Input_data(int Cantidades[3][3], float Pesos[3][3], float PesoTotal[3][3])
 {
     cout<< "Polos Jersey: ";cin >> Cantidades[jersey][0]; cout << "Peso(kg)/prenda - Polos Jersey: ";cin >> Pesos[jersey][0];
     cout<< "Camisas Jersey: ";cin >> Cantidades[jersey][1]; cout << "Peso(kg)/prenda - Camisas Jersey: ";cin >> Pesos[jersey][1];
@@ -24,7 +24,7 @@ float Input_data(int Cantidades[3][3], float Pesos[3][3], float PesoTotal[3][3])
         for(int j=0;j<3;j++)
             PesoTotal[i][j]=Cantidades[i][j]*Pesos[i][j];
     
-    return PesoTotal[3][3];
+    return;
 }
 
 float Cantidad_materia_prima(float PesoTotal[3][3]){
