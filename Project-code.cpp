@@ -42,13 +42,13 @@ float ConfeccionPrendasPique[3]={0.22,0.33,0.04};//{polos,camisas,cuellos}
 float ConfeccionPrendasFranela[3]={0.25,0.5,0.05};//{polos,camisas,cuellos}
 
 for (size_t i=0;i<3;i++){
-  tiempo_jersey+=PesoTotal[jersey][i]*tiempo_tejido*tiempo_tenido*tiempo_acabado*ConfeccionPrendasJersey[i];}
+  tiempo_jersey+=((PesoTotal[jersey][i]/tiempo_tejido)+(PesoTotal[jersey][i]/tiempo_tenido)+(PesoTotal[jersey][i]/tiempo_acabado)+(PesoTotal[jersey][i]/ConfeccionPrendasJersey[i]));}
 
 for (size_t i=0;i<3;i++){
-  tiempo_pique+=PesoTotal[pique][i]*tiempo_tejido*tiempo_tenido*tiempo_acabado*ConfeccionPrendasPique[i];}
+  tiempo_pique+=((PesoTotal[pique][i]/tiempo_tejido)+(PesoTotal[pique][i]/tiempo_tenido)+(PesoTotal[pique][i]/tiempo_acabado)+(PesoTotal[pique][i]/ConfeccionPrendasPique[i]));}
 
 for (size_t i=0;i<3;i++){
-  tiempo_franela+=PesoTotal[franela][i]*tiempo_tejido*tiempo_tenido*tiempo_acabado*ConfeccionPrendasFranela[i];}
+  tiempo_franela+=((PesoTotal[franela][i]/tiempo_tejido)+(PesoTotal[franela][i]/tiempo_tenido)+(PesoTotal[franela][i]/tiempo_acabado)+(PesoTotal[franela][i]/ConfeccionPrendasFranela[i]));}
 
 cout << "El tiempo de producción de Jersey es: " << tiempo_jersey/24 << " días." << endl;
 cout << "El tiempo de producción de Pique es: " << tiempo_pique/24 << " días." << endl;
