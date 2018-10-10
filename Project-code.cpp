@@ -27,16 +27,11 @@ void Input_data(int Cantidades[3][3], float Pesos[3][3], float PesoTotal[3][3])
     for(int i=0;i<3;i++)
         for(int j=0;j<3;j++)
             PesoTotal[i][j]=Cantidades[i][j]*Pesos[i][j];
-
-    for(int i=0;i<3;i++){
-        for(int j=0;j<3;j++){
-            cout << setw(5) << PesoTotal[i][j];}
-            cout << endl;}
-
+    
     return;
 }
 
-float Calculo_tiempos(float PesoTotal[3][3], float Jersey[3],float Pique[3], float Franela[3])
+void Calculo_tiempos(float PesoTotal[3][3], float Jersey[3],float Pique[3], float Franela[3])
 {float tiempo_jersey=0,tiempo_pique=0,tiempo_franela=0;
 
   for (size_t i=0;i<3;i++){
@@ -54,17 +49,11 @@ float Calculo_tiempos(float PesoTotal[3][3], float Jersey[3],float Pique[3], flo
 
 //falta la lista de fechas de entrega
 
-  return tiempo_jersey,tiempo_pique,tiempo_franela;
+  return;
 }
 
-float Cantidad_materia_prima(float PesoTotal[3][3],float MateriasPrimas[3])
+void Cantidad_materia_prima(float PesoTotal[3][3],float MateriasPrimas[3])
 {float MateriaPrimaJersey=0,MateriaPrimaPique=0,MateriaPrimaFranela=0;
-
-
-  for(int i=0;i<3;i++){
-    for (int j=0;j<3;j++){
-      cout << setw(5) << PesoTotal[i][j];}
-      cout << endl;}
   
   for (int i=0;i<3;i++)   
       MateriaPrimaJersey+=PesoTotal[jersey][i];
@@ -83,17 +72,11 @@ float Cantidad_materia_prima(float PesoTotal[3][3],float MateriasPrimas[3])
   MateriasPrimas[pique]=MateriaPrimaPique/0.5;
   MateriasPrimas[franela]=MateriaPrimaFranela/0.3;
 
-  return MateriaPrimaJersey, MateriaPrimaPique, MateriaPrimaFranela, MateriasPrimas[3];
+  return ;
 }
 
-float Ganancias_esperadas(int Cantidades[3][3], float RowsMaterials[3])
+void Ganancias_esperadas(int Cantidades[3][3], float RowsMaterials[3])
 {float ganancia_jersey=0,ganancia_pique=0,ganancia_franela=0;
-
-  for (int i=0;i<3;i++){
-    cout << setw(5) <<RowsMaterials[i];
-  }
-
-  cout << endl;
 
   float VentaJersey[3]={30,50,5};//{polos,camisas,cuellos}
   float VentaPique[3]={60,75,10};//{polos,camisas,cuellos}
@@ -121,7 +104,7 @@ float Ganancias_esperadas(int Cantidades[3][3], float RowsMaterials[3])
   cout << "La ganancia por Piques es " <<ganancia_pique <<" soles." << endl;
   cout << "La ganancia por Franelas es " <<ganancia_franela <<" soles." << endl;
 
-return ganancia_jersey,ganancia_pique,ganancia_franela;
+return ;
 }
 
 int main()
