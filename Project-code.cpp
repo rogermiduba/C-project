@@ -1,6 +1,8 @@
 //Proyecto
 #include <iostream>
 #include <iomanip>
+#include <ctime>
+#include <cmath>
 
 using namespace std;
 
@@ -105,6 +107,64 @@ void Ganancias_esperadas(int Cantidades[3][3], float RowsMaterials[3])
 
 return ;
 }
+
+
+void calendario_fecha_entrega(float tiempo_dias)
+{
+    int year, month, day, days_after;
+    char month_ch[10]={0};
+    string month_str;
+    char *registro;
+    time_t tAct = time(NULL);
+    registro=asctime(localtime(&tAct));
+    for(int i=0;i<4;i++)
+        year+=(registro[i+20] - '0')*pow(10,3-i);
+    for(int i=0;i<2;i++)
+        day+=(registro[i+8] - '0')*pow(10,1-i);
+    for(int i=0;i<3;i++)
+        month_ch[i]=registro[4+i];
+    month_str = string(month_ch);
+
+    int dias_por_mes[12]={31,28,31,30,31,30,31,31,30,31,30,31};
+    string nomb_mes[12]={"Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"};
+    
+    if(year%4==0)
+        dias_por_mes[1]++;
+    
+    for(int i=0;i<12;i++)
+        if(month_str==nomb_mes[i]){
+            month=i+1;
+            break;
+        }
+    
+    if(tiempo_dias/int(tiempo_dias)!=0)
+        days_after=int(tiempo_dias)+1;
+    else
+        days_after=int(tiempo_dias);
+    
+    cout<<"Fecha actual: "<<day<<"/"<<month<<"/"<<year<<"\n";
+    
+    int contador=0;
+    while(contador<days_after){
+        day++;
+        cout<<"";
+        
+        if(day==dias_por_mes[month-1]+1){
+            day=1;
+            month++;
+        }
+        if(month==13){
+            month=1;
+            year++;
+        }
+        contador++;
+    }
+    
+    cout<<"Fecha de entrega: "<<day<<"/"<<month<<"/"<<year<<"\n";
+    return;
+}
+
+
 
 int main()
 {
