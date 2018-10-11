@@ -145,8 +145,7 @@ void Calendario_fecha_entrega(float tiempo_dias)
         days_after=int(tiempo_dias)+1;
     else
         days_after=int(tiempo_dias);
-
-    cout<<"Fecha actual: "<<day<<"/"<<month<<"/"<<year<<"\n";
+    
 
     int contador=0;
     while(contador<days_after){
@@ -164,10 +163,9 @@ void Calendario_fecha_entrega(float tiempo_dias)
         contador++;
     }
 
-    cout<<"Fecha de entrega: "<<day<<"/"<<month<<"/"<<year<<"\n";
+    cout<<day<<"/"<<month<<"/"<<year<<"\n";
     return;
 }
-
 
 
 int main()
@@ -191,9 +189,9 @@ int main()
     Cantidad_materia_prima(PesoTotal,MateriasPrimas);cout << endl;
     Ganancias_esperadas(Cantidades,MateriasPrimas); cout << endl;
     tiempo_jersey/=24;tiempo_pique/=24;tiempo_franela/=24;
-    Calendario_fecha_entrega(tiempo_jersey);
-    Calendario_fecha_entrega(tiempo_pique);
-    Calendario_fecha_entrega(tiempo_franela);
+    cout << "Fecha de entrega Jersey: "; Calendario_fecha_entrega(tiempo_jersey); cout << endl;
+    cout << "Fecha de entrega Pique: "; Calendario_fecha_entrega(tiempo_pique); cout << endl;
+    cout << "Fecha de entrega Pique: "; Calendario_fecha_entrega(tiempo_franela); cout << endl;
 
     return 0;
 }
