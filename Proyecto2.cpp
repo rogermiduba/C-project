@@ -4,131 +4,99 @@
 #include <ctime>
 #include <cmath>
 #include <fstream>
+#include <string>
+#include <cstdlib>
 
 using namespace std;
 
 const int jersey = 0; const int pique = 1; const int franela = 2;
-const int polo = 0; const int camisa = 1; const int cuello = 2;
-const float tiempo_tejido=1.0; const float tiempo_tenido=10.0;
-const float tiempo_acabado=20.0;
 
-class Prenda{
-  float TiempoDeTejido;
-  float TiempoDeTenido;
-  float TiempoDeAcabado;
-  int Cantidades[3][3];
+class Prendas{
+  int PoloJersey,PoloPique,PoloFranela,CamisaJersey,CamisaPique,CamisaFranela,CuelloJersey,CuelloPique,CuelloFranela;
 public:
-  Prenda(){
-    cout<< "Polos Jersey: ";cin >> Cantidades[jersey][0];
-    cout<< "Camisas Jersey: ";cin >> Cantidades[jersey][1]; 
-    cout<< "Cuellos Jersey: ";cin >> Cantidades[jersey][2]; 
-    cout<< endl;
-    cout<< "Polos Pique: ";cin >> Cantidades[pique][0];
-    cout<< "Camisas Pique: ";cin >> Cantidades[pique][1];
-    cout<< "Cuellos Pique: ";cin >> Cantidades[pique][2]; 
-    cout <<endl;
-    cout<< "Polos Franela: ";cin >> Cantidades[franela][0]; 
-    cout<< "Camisas Franela: ";cin >> Cantidades[franela][1]; 
-    cout<< "Cuellos Franela: ";cin >> Cantidades[franela][2];
-    cout << endl;
-    fstream inicio("inicio.txt", ios::in);
-    inicio.seekg(16, ios::beg);
-    TiempoDeTejido=inicio.get();
-    inicio.seekg(18, ios::beg);
-    TiempoDeTenido=inicio.get();
-    inicio.seekg(20, ios::beg);
-    TiempoDeAcabado=inicio.get();
+  Prendas(){};
+  void Datos(int PJ,int PP, int PF,int CJ,int CP,int CF,int CuJ,int CuP,int CuF){
+  cout <<"Polos Jersey: " ; cin >> PJ;PoloJersey=PJ; cout <<"Camisas Jersey: " ; cin >> CJ;CamisaJersey=CJ; cout <<"Cuellos Jersey: " ; cin >> CuJ;CuelloJersey=CuJ;
+  cout <<"Polos Pique: " ; cin >> PP;PoloPique=PP; cout <<"Polos Franela: " ; cin >> PF;PoloFranela=PF; cout <<"Camisas Pique: " ; cin >> CP;CamisaPique=CP;
+  cout <<"Camisas Franela: " ; cin >> CF;CamisaFranela=CF; cout <<"Cuellos Pique: " ; cin >> CuP;CuelloPique=CuP; cout <<"Cuellos Franela: " ; cin >> CuF;CuelloFranela=CuF;
   };
+  int getPoloJersey(){return PoloJersey;};int getCamisaJersey(){return CamisaJersey;};int getCuelloJersey(){return CuelloJersey;};
+  int getPoloPique(){return PoloPique;};int getCamisaPique(){return CamisaPique;};int getCuelloPique(){return CuelloPique;};
+  int getPoloFranela(){return PoloFranela;};int getCamisaFranela(){return CamisaFranela;};int getCuelloFranela(){return CuelloFranela;};
 };
 
-class Jersey: public Prenda{
-  float PesoPorPrenda[3];
-  float TiempoDeConfeccion[3];
-public:
-  Jersey(){
-    fstream inicio("inicio.txt", ios::in);
-    inicio.seekg(3, ios::beg);
-    TiempoDeConfeccion[polo]=inicio.get();
-    inicio.seekg(4, ios::beg);
-    TiempoDeConfeccion[camisa]=inicio.get();
-    inicio.seekg(5, ios::beg);
-    TiempoDeConfeccion[cuello]=inicio.get();
+void Inicializar(int Cantidades[3][3],float Pesos[3][3],float PesosTotales[3][3]){
+  
+  Prendas Pedido;
+  Pedido.Datos(0, 0, 0, 0, 0, 0, 0, 0, 0);
+  //Cantidades[3][3]={0,0,0} Tipo de Tela (Jersey=0,Pique=1,Franela=2)
+                //Polo,Camisa,Cuello 
+  Cantidades[jersey][0]=Pedido.getPoloJersey();Cantidades[jersey][1]=Pedido.getCamisaJersey();Cantidades[jersey][2]=Pedido.getCuelloJersey();
+  Cantidades[pique][0]=Pedido.getPoloPique();Cantidades[pique][1]=Pedido.getCamisaPique();Cantidades[pique][2]=Pedido.getCuelloPique();
+  Cantidades[franela][0]=Pedido.getPoloFranela();Cantidades[franela][1]=Pedido.getCamisaFranela();Cantidades[franela][2]=Pedido.getCuelloFranela();
 
-    inicio.seekg(23, ios::beg);
-    TiempoDeConfeccion[polo]=inicio.get();
-    inicio.seekg(24, ios::beg);
-    TiempoDeConfeccion[camisa]=inicio.get();
-    inicio.seekg(25, ios::beg);
-    TiempoDeConfeccion[cuello]=inicio.get();
-  };
+  fstream inicio("inicio.txt",ios::in);//Archivo en modo lectura  
+  
+  string PesoPJ,PesoCJ,PesoCuJ,PesoPP,PesoCP,PesoCuP,PesoPF,PesoCF,PesoCuF;
+
+  if (inicio.fail()){
+    cout << "El archivo no se pudo abrir";}
+
+  inicio.seekg(17, ios::beg);getline(inicio,PesoPJ); inicio.seekg(23, ios::beg);getline(inicio,PesoCJ); inicio.seekg(27, ios::beg);getline(inicio,PesoCuJ);
+  inicio.seekg(39, ios::beg);getline(inicio,PesoPP); inicio.seekg(44, ios::beg);getline(inicio,PesoCP); inicio.seekg(48, ios::beg);getline(inicio,PesoCuP);
+  inicio.seekg(61, ios::beg);getline(inicio,PesoPF); inicio.seekg(66, ios::beg);getline(inicio,PesoCF); inicio.seekg(71, ios::beg);getline(inicio,PesoCuF);
+  
+  Pesos[jersey][0]=(float)atof(PesoPJ.c_str()); Pesos[jersey][1]=(float)atof(PesoCJ.c_str()); Pesos[jersey][2]=(float)atof(PesoCuJ.c_str());
+  Pesos[pique][0]=(float)atof(PesoPP.c_str()); Pesos[pique][1]=(float)atof(PesoCP.c_str()); Pesos[pique][2]=(float)atof(PesoCuP.c_str());
+  Pesos[franela][0]=(float)atof(PesoPF.c_str()); Pesos[franela][1]=(float)atof(PesoCF.c_str()); Pesos[franela][2]=(float)atof(PesoCuF.c_str());
+
+  for(int i=0;i<3;i++)
+    for(int j=0;j<3;j++)
+        PesosTotales[i][j]=Cantidades[i][j]*Pesos[i][j];
+
+  for(int i=0;i<3;i++)
+    for(int j=0;j<3;j++)
+        cout << PesosTotales[i][j] << endl;
+
 };
 
-class Pique: public Prenda{
-  float PesoPorPrenda[3];
-  float TiempoDeConfeccion[3];
-public:
-  Pique(){
-    fstream inicio("inicio.txt", ios::in);
-    inicio.seekg(7, ios::beg);
-    TiempoDeConfeccion[polo]=inicio.get();
-    inicio.seekg(8, ios::beg);
-    TiempoDeConfeccion[camisa]=inicio.get();
-    inicio.seekg(9, ios::beg);
-    TiempoDeConfeccion[cuello]=inicio.get();
+void CalculoDeTiempos(float PesoTotal[3][3],float &tiempo_jersey, float &tiempo_pique,float &tiempo_franela){
 
-    inicio.seekg(27, ios::beg);
-    TiempoDeConfeccion[polo]=inicio.get();
-    inicio.seekg(28, ios::beg);
-    TiempoDeConfeccion[camisa]=inicio.get();
-    inicio.seekg(29, ios::beg);
-    TiempoDeConfeccion[cuello]=inicio.get();
-  };
-};
+  fstream inicio("inicio.txt",ios::in);//Archivo en modo lectura  
+  
+  string Tejido,Tenido,Acabado,ConfeccionPJ,ConfeccionPP,ConfeccionPF,ConfeccionCJ,ConfeccionCP,ConfeccionCF,ConfeccionCuJ,ConfeccionCuP,ConfeccionCuF;
 
-class Franela: public Prenda{
-  float PesoPorPrenda[3];
-  float TiempoDeConfeccion[3];
-public:
-  Franela(){
-    fstream inicio("inicio.txt", ios::in);
-    inicio.seekg(11, ios::beg);
-    TiempoDeConfeccion[polo]=inicio.get();
-    inicio.seekg(12, ios::beg);
-    TiempoDeConfeccion[camisa]=inicio.get();
-    inicio.seekg(13, ios::beg);
-    TiempoDeConfeccion[cuello]=inicio.get();
+  if (inicio.fail()){
+    cout << "El archivo no se pudo abrir";}
 
-    inicio.seekg(31, ios::beg);
-    TiempoDeConfeccion[polo]=inicio.get();
-    inicio.seekg(32, ios::beg);
-    TiempoDeConfeccion[camisa]=inicio.get();
-    inicio.seekg(33, ios::beg);
-    TiempoDeConfeccion[cuello]=inicio.get();
-  };
-};
+  inicio.seekg(91, ios::beg);getline(inicio,Tejido); inicio.seekg(103, ios::beg);getline(inicio,Tenido); inicio.seekg(116, ios::beg);getline(inicio,Acabado),inicio.seekg(149, ios::beg);getline(inicio,ConfeccionPJ); inicio.seekg(154, ios::beg);getline(inicio,ConfeccionCJ); inicio.seekg(159, ios::beg);getline(inicio,ConfeccionCuJ),inicio.seekg(170, ios::beg);getline(inicio,ConfeccionPP); inicio.seekg(175, ios::beg);getline(inicio,ConfeccionCP); inicio.seekg(180, ios::beg);getline(inicio,ConfeccionCuP),inicio.seekg(193, ios::beg);getline(inicio,ConfeccionPF); inicio.seekg(198, ios::beg);getline(inicio,ConfeccionCF); inicio.seekg(203, ios::beg);getline(inicio,ConfeccionCuF);
 
-void Calculo_tiempos(float PesoTotal[3][3], float Jersey[3],float Pique[3], float Franela[3],float &tiempo_jersey, float &tiempo_pique,float &tiempo_franela)
-{
+  float tiempo_tejido,tiempo_tenido,tiempo_acabado,Jersey[3],Pique[3],Franela[3];
+  tiempo_tejido=(float)atof(Tejido.c_str());tiempo_tenido=(float)atof(Tenido.c_str());tiempo_acabado=(float)atof(Acabado.c_str());
+  Jersey[0]=(float)atof(ConfeccionPJ.c_str()); Jersey[1]=(float)atof(ConfeccionCJ.c_str()); Jersey[2]=(float)atof(ConfeccionCuJ.c_str());
+  Pique[0]=(float)atof(ConfeccionPP.c_str()); Pique[1]=(float)atof(ConfeccionCP.c_str()); Pique[2]=(float)atof(ConfeccionCuP.c_str());
+  Franela[0]=(float)atof(ConfeccionPF.c_str()); Franela[1]=(float)atof(ConfeccionCF.c_str()); Franela[2]=(float)atof(ConfeccionCuF.c_str());
 
-    for (size_t i=0;i<3;i++){
+  cout << tiempo_tejido << " " << tiempo_tenido << " " << tiempo_acabado <<endl << ConfeccionPJ << " " << ConfeccionCJ << " " << ConfeccionCuJ << endl << ConfeccionPP << " " << ConfeccionCP << " " << ConfeccionCuP << endl << ConfeccionPF << " " << ConfeccionCF << " " << ConfeccionCuF << endl;
+
+  for (size_t i=0;i<3;i++){
         tiempo_jersey+=(((PesoTotal[jersey][i])/tiempo_tejido)+((PesoTotal[jersey][i])/tiempo_tenido)+((PesoTotal[jersey][i])/tiempo_acabado)+((PesoTotal[jersey][i])/Jersey[i]));}
 
-    for (size_t i=0;i<3;i++){
+  for (size_t i=0;i<3;i++){
         tiempo_pique+=((PesoTotal[pique][i]/tiempo_tejido)+(PesoTotal[pique][i]/tiempo_tenido)+(PesoTotal[pique][i]/tiempo_acabado)+(PesoTotal[pique][i]/Pique[i]));}
 
-    for (size_t i=0;i<3;i++){
+  for (size_t i=0;i<3;i++){
         tiempo_franela+=((PesoTotal[franela][i]/tiempo_tejido)+(PesoTotal[franela][i]/tiempo_tenido)+(PesoTotal[franela][i]/tiempo_acabado)+(PesoTotal[franela][i]/Franela[i]));}
 
     cout << "El tiempo de producción de Jersey es: " << tiempo_jersey/24 << " días." << endl;
     cout << "El tiempo de producción de Pique es: " << tiempo_pique/24 << " días." << endl;
     cout << "El tiempo de producción de Franela es: " << tiempo_franela/24 << " días." << endl;
 
-
     return;
 }
 
-void Cantidad_materia_prima(float PesoTotal[3][3],float MateriasPrimas[3])
-{float MateriaPrimaJersey=0,MateriaPrimaPique=0,MateriaPrimaFranela=0;
+void CalculoDeMateriaPrima(float PesoTotal[3][3],float MateriasPrimas[3]){
+float MateriaPrimaJersey=0,MateriaPrimaPique=0,MateriaPrimaFranela=0;
 
     for (int i=0;i<3;i++)
         MateriaPrimaJersey+=PesoTotal[jersey][i];
@@ -148,128 +116,29 @@ void Cantidad_materia_prima(float PesoTotal[3][3],float MateriasPrimas[3])
     MateriasPrimas[franela]=MateriaPrimaFranela/0.3;
 
     return ;
-}
+};
 
-void Ganancias_esperadas(int Cantidades[3][3], float RowsMaterials[3])
-{float ganancia_jersey=0,ganancia_pique=0,ganancia_franela=0;
+void CalculoDeCostos(){};
 
-    float VentaJersey[3]={30,50,5};//{polos,camisas,cuellos}
-    float VentaPique[3]={60,75,10};//{polos,camisas,cuellos}
-    float VentaFranela[3]={60,80,15};//{polos,camisas,cuellos}
+void Salidas(){};
 
-    for(size_t i=0;i<3;i++){
-        ganancia_jersey+=Cantidades[jersey][i]*VentaJersey[i];
-    }
-
-    ganancia_jersey-=(RowsMaterials[jersey]*10.0);
-
-    for(size_t i=0;i<3;i++){
-        ganancia_pique+=Cantidades[pique][i]*VentaPique[i];
-    }
-
-    ganancia_pique-=(RowsMaterials[pique]*10.0);
-
-    for(size_t i=0;i<3;i++){
-        ganancia_franela+=Cantidades[franela][i]*VentaFranela[i];
-    }
-
-    ganancia_franela-=(RowsMaterials[franela]*10.0);
-
-    cout << "La ganancia por Jerseys es " <<ganancia_jersey <<" soles." << endl;
-    cout << "La ganancia por Piques es " <<ganancia_pique <<" soles." << endl;
-    cout << "La ganancia por Franelas es " <<ganancia_franela <<" soles." << endl;
-
-    return ;
-}
-
-
-void Calendario_fecha_entrega(float tiempo_dias)
-{
-    int year=0, month=0, day=0, days_after;
-    char month_ch[10]={0};
-    string month_str;
-    char *registro;
-    time_t tAct = time(nullptr);
-    registro=asctime(localtime(&tAct));
-    for(int i=0;i<4;i++)
-        year+=(registro[i+20] - '0')*pow(10,3-i);
-
-    for(int i=0;i<2;i++)
-        day+=(registro[i+8] - '0')*pow(10,1-i);
-
-    for(int i=0;i<3;i++)
-        month_ch[i]=registro[4+i];
-
-    month_str = string(month_ch);
-
-    int dias_por_mes[12]={31,28,31,30,31,30,31,31,30,31,30,31};
-    string nomb_mes[12]={"Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"};
-
-    if(year%4==0)
-        dias_por_mes[1]++;
-
-    for(int i=0;i<12;i++)
-        if(month_str==nomb_mes[i]){
-            month=i+1;
-            break;
-        }
-
-    if(tiempo_dias/int(tiempo_dias)!=0)
-        days_after=int(tiempo_dias)+1;
-    else
-        days_after=int(tiempo_dias);
-
-    int contador=0;
-    while(contador<days_after){
-        day++;
-        cout<<"";
-
-        if(day==dias_por_mes[month-1]+1){
-            day=1;
-            month++;
-        }
-        if(month==13){
-            month=1;
-            year++;
-        }
-        contador++;
-    }
-
-    cout<<day<<"/"<<month<<"/"<<year<<"\n";
-    return;
-}
 
 int main(){
+ int Cantidades[3][3]={0};
+ float Pesos[3][3];
+ float PesosTotales[3][3];
+ float MateriasPrimas[3];
+ float tiempo_jersey=0;float tiempo_pique=0; float tiempo_franela=0;
 
-    int Cantidades[3/*Telas*/][3/*Prendas*/] = {
-            {0,0,0},//Jersey
-            {0,0,0},//Pique
-            {0,0,0} //Franela
-            //{Polos,Camisas,Cuellos}
-    };
-    float Pesos[3/*Telas*/][3/*Prendas*/];
-    float PesoTotal[3][3];
-    float ConfeccionJersey[3]={0.2,0.5,0.05};//{polos,camisas,cuellos}
-    float ConfeccionPique[3]={0.22,0.33,0.04};//{polos,camisas,cuellos}
-    float ConfeccionFranela[3]={0.25,0.5,0.05};//{polos,camisas,cuellos}
-    float MateriasPrimas[3];
-    float tiempo_jersey=0;float tiempo_pique=0; float tiempo_franela=0;
-    Prenda Cantidad;
-    
-    Calculo_tiempos(PesoTotal,ConfeccionJersey,ConfeccionPique,ConfeccionFranela,tiempo_jersey,tiempo_pique,tiempo_franela); cout << endl;
-    Cantidad_materia_prima(PesoTotal,MateriasPrimas);cout << endl;
-    Ganancias_esperadas(Cantidades,MateriasPrimas); cout << endl;
-    tiempo_jersey/=24;tiempo_pique/=24;tiempo_franela/=24;
-    cout << "Fecha de entrega Jersey: "; Calendario_fecha_entrega(tiempo_jersey); cout << endl;
-    cout << "Fecha de entrega Pique: "; Calendario_fecha_entrega(tiempo_pique); cout << endl;
-    cout << "Fecha de entrega Pique: "; Calendario_fecha_entrega(tiempo_franela); cout << endl;
+ Inicializar(Cantidades,Pesos,PesosTotales);//inicializar(...), funcion que inicializa los arreglos y genera el archivo de pedido
+ 
+ CalculoDeTiempos(PesosTotales,tiempo_jersey,tiempo_pique,tiempo_franela);//calculo tiempos(...), funcion que calcula los tiempos de produccion por producto y prenda.
+ 
+ CalculoDeMateriaPrima(PesosTotales,MateriasPrimas);//calculo materia prima(...), funcion que calcula los requerimientos de materia prima (hilo) por tipo de tela.  //I.e. Materia prima=Kg tela / rendimiento
 
-    if (tiempo_franela<tiempo_jersey && tiempo_franela <tiempo_pique)
-        cout << "Se sugiere que primero se elabore la tiempo se demore en el proceso de confección Franela." << endl;
-    else if (tiempo_jersey<tiempo_franela && tiempo_jersey <tiempo_pique)
-        cout << "Se sugiere que primero se elabore la tiempo se demore en el proceso de confección Jersey." << tiempo_jersey << endl;
-    else if (tiempo_pique<tiempo_jersey && tiempo_pique <tiempo_franela)
-        cout << "Se sugiere que primero se elabore la tiempo se demore en el proceso de confección Pique." << tiempo_pique << endl;
+ CalculoDeCostos(); //calculo costos(...), funci´on que calcula los costos y estima la ganancia por tipo de tela
+ 
+ Salidas();//salidas(...) , funci´on que genera el a
 
-    return 0;
+  return 0;
 }
