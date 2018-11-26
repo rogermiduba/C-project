@@ -48,17 +48,7 @@ public:
   int getCuello(){return Cuellos;};
 };
 
-void Inicializar(int Cantidades[3][3],float Pesos[3][3],float PesosTotales[3][3]){
-
- Polo Polo1("Jersey"); Camisa Camisa1("Jersey");Cuello Cuello1("Jersey"); 
- Polo Polo2("Pique"); Camisa Camisa2("Pique"); Cuello Cuello2("Pique");
- Polo Polo3("Franela"); Camisa Camisa3("Franela");Cuello Cuello3("Franela");
-
-  //Cantidades[3][3]={0,0,0} Tipo de Tela (Jersey=0,Pique=1,Franela=2)
-          //Polo,Camisa,Cuello 
-  Cantidades[jersey][0]=Polo1.getPolo();Cantidades[jersey][1]=Camisa1.getCamisa();Cantidades[jersey][2]=Cuello1.getCuello();
-  Cantidades[pique][0]=Polo2.getPolo();Cantidades[pique][1]=Camisa2.getCamisa();Cantidades[pique][2]=Cuello2.getCuello(); 
-  Cantidades[franela][0]=Polo3.getPolo();Cantidades[franela][1]=Camisa3.getCamisa();Cantidades[franela][2]=Cuello3.getCuello();
+void Inicializar(string tipo,Polo Polos,Camisa Camisas, Cuello Cuellos,float PesosTotales[3][3]){
 
   fstream inicio("inicio.txt",ios::in);//Archivo en modo lectura  
   
@@ -70,14 +60,18 @@ void Inicializar(int Cantidades[3][3],float Pesos[3][3],float PesosTotales[3][3]
   inicio.seekg(17, ios::beg);getline(inicio,PesoPJ); inicio.seekg(23, ios::beg);getline(inicio,PesoCJ); inicio.seekg(27, ios::beg);getline(inicio,PesoCuJ);
   inicio.seekg(39, ios::beg);getline(inicio,PesoPP); inicio.seekg(44, ios::beg);getline(inicio,PesoCP); inicio.seekg(48, ios::beg);getline(inicio,PesoCuP);
   inicio.seekg(61, ios::beg);getline(inicio,PesoPF); inicio.seekg(66, ios::beg);getline(inicio,PesoCF); inicio.seekg(71, ios::beg);getline(inicio,PesoCuF);
-  
-  Pesos[jersey][0]=(float)atof(PesoPJ.c_str()); Pesos[jersey][1]=(float)atof(PesoCJ.c_str()); Pesos[jersey][2]=(float)atof(PesoCuJ.c_str());
-  Pesos[pique][0]=(float)atof(PesoPP.c_str()); Pesos[pique][1]=(float)atof(PesoCP.c_str()); Pesos[pique][2]=(float)atof(PesoCuP.c_str());
-  Pesos[franela][0]=(float)atof(PesoPF.c_str()); Pesos[franela][1]=(float)atof(PesoCF.c_str()); Pesos[franela][2]=(float)atof(PesoCuF.c_str());
-
-  for(int i=0;i<3;i++)
-    for(int j=0;j<3;j++)
-        PesosTotales[i][j]=Cantidades[i][j]*Pesos[i][j];
+  if (tipo=="Jersey"){
+  PesosTotales[jersey][0]=((float)atof(PesoPJ.c_str()))*Polos.getPolo(); 
+  PesosTotales[jersey][1]=((float)atof(PesoCJ.c_str()))*Camisas.getCamisa(); 
+  PesosTotales[jersey][2]=((float)atof(PesoCuJ.c_str()))*Cuellos.getCuello();}
+  else if(tipo=="Pique"){
+  PesosTotales[pique][0]=((float)atof(PesoPP.c_str()))*Polos.getPolo(); 
+  PesosTotales[pique][1]=((float)atof(PesoCP.c_str()))*Camisas.getCamisa(); 
+  PesosTotales[pique][2]=((float)atof(PesoCuP.c_str()))*Cuellos.getCuello();}
+  else if(tipo=="Franela"){
+  PesosTotales[franela][0]=((float)atof(PesoPF.c_str()))*Polos.getPolo(); 
+  PesosTotales[franela][1]=((float)atof(PesoCF.c_str()))*Camisas.getCamisa(); 
+  PesosTotales[franela][2]=((float)atof(PesoCuF.c_str()))*Cuellos.getCuello();}
 
 };
 
@@ -135,34 +129,32 @@ float MateriaPrimaJersey=0,MateriaPrimaPique=0,MateriaPrimaFranela=0;
 
 };
 
-void CalculoDeCostos(int Cantidades[3][3], float RowsMaterials[3])
+void CalculoDeCostos(string tipo, Polo Polos, Camisa Camisas, Cuello Cuellos,float RowsMaterials[3])
 {float ganancia_jersey=0,ganancia_pique=0,ganancia_franela=0;
 
     float VentaJersey[3]={30,50,5};//{polos,camisas,cuellos}
     float VentaPique[3]={60,75,10};//{polos,camisas,cuellos}
     float VentaFranela[3]={60,80,15};//{polos,camisas,cuellos}
 
-    for(size_t i=0;i<3;i++){
-        ganancia_jersey+=Cantidades[jersey][i]*VentaJersey[i];
+    if(tipo=="Jersey"){
+        ganancia_jersey=(Polos.getPolo()*VentaJersey[0])+(Camisas.getCamisa()*VentaJersey[1])+(Cuellos.getCuello()*VentaJersey[2]);
+
+        ganancia_jersey-=(RowsMaterials[jersey]*10.0);
+        cout << "La ganancia por Jerseys es " <<ganancia_jersey <<" soles." << endl;
     }
 
-    ganancia_jersey-=(RowsMaterials[jersey]*10.0);
+    if(tipo=="Pique"){
+        ganancia_pique=(Polos.getPolo()*VentaPique[0])+(Camisas.getCamisa()*VentaPique[1])+(Cuellos.getCuello()*VentaPique[2]);
 
-    for(size_t i=0;i<3;i++){
-        ganancia_pique+=Cantidades[pique][i]*VentaPique[i];
+        ganancia_pique-=(RowsMaterials[pique]*10.0);
+        cout << "La ganancia por Piques es " <<ganancia_pique <<" soles." << endl;
     }
 
-    ganancia_pique-=(RowsMaterials[pique]*10.0);
-
-    for(size_t i=0;i<3;i++){
-        ganancia_franela+=Cantidades[franela][i]*VentaFranela[i];
-    }
-
-    ganancia_franela-=(RowsMaterials[franela]*10.0);
-
-    cout << "La ganancia por Jerseys es " <<ganancia_jersey <<" soles." << endl;
-    cout << "La ganancia por Piques es " <<ganancia_pique <<" soles." << endl;
-    cout << "La ganancia por Franelas es " <<ganancia_franela <<" soles." << endl;
+    if(tipo=="Franela"){
+        ganancia_franela=(Polos.getPolo()*VentaFranela[0])+(Camisas.getCamisa()*VentaFranela[1])+(Cuellos.getCuello()*VentaFranela[2]);
+        ganancia_franela-=(RowsMaterials[franela]*10.0);
+        cout << "La ganancia por Franelas es " << ganancia_franela <<" soles." << endl;
+    }   
 
 };
 
@@ -240,19 +232,25 @@ void Salidas(float &tiempo_jersey,float &tiempo_pique,float &tiempo_franela){
 };
 
 int main(){
- int Cantidades[3][3]={0};
- float Pesos[3][3];
+  
  float PesosTotales[3][3];
  float MateriasPrimas[3];
  float tiempo_jersey=0;float tiempo_pique=0; float tiempo_franela=0;
+ Polo Polo1("Jersey"); Camisa Camisa1("Jersey");Cuello Cuello1("Jersey"); 
+ Polo Polo2("Pique"); Camisa Camisa2("Pique"); Cuello Cuello2("Pique");
+ Polo Polo3("Franela"); Camisa Camisa3("Franela");Cuello Cuello3("Franela");
 
- Inicializar(Cantidades,Pesos,PesosTotales);//inicializar(...), funcion que inicializa los arreglos y genera el archivo de pedido
+ Inicializar("Jersey",Polo1,Camisa1,Cuello1,PesosTotales);
+ Inicializar("Pique",Polo2,Camisa2,Cuello2,PesosTotales);
+ Inicializar("Franela",Polo3,Camisa3,Cuello3,PesosTotales);//inicializar(...), funcion que inicializa los arreglos y genera el archivo de pedido
  
  CalculoDeTiempos(PesosTotales,tiempo_jersey,tiempo_pique,tiempo_franela);//calculo tiempos(...), funcion que calcula los tiempos de produccion por producto y prenda.
  
  CalculoDeMateriaPrima(PesosTotales,MateriasPrimas);//calculo materia prima(...), funcion que calcula los requerimientos de materia prima (hilo) por tipo de tela.  //I.e. Materia prima=Kg tela / rendimiento
 
- CalculoDeCostos(Cantidades,MateriasPrimas); //calculo costos(...), funci´on que calcula los costos y estima la ganancia por tipo de tela
+ CalculoDeCostos("Jersey",Polo1,Camisa1,Cuello1,MateriasPrimas);
+ CalculoDeCostos("Pique",Polo2,Camisa2,Cuello2,MateriasPrimas); 
+ CalculoDeCostos("Franela",Polo3,Camisa3,Cuello3,MateriasPrimas); //calculo costos(...), funci´on que calcula los costos y estima la ganancia por tipo de tela
 
  Salidas(tiempo_jersey,tiempo_pique,tiempo_franela);//salidas(...) , funci´on que genera el a
 
