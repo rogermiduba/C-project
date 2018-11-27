@@ -86,20 +86,20 @@ void CalculoDeTiempos(float PesoTotal[3][3],Tiempo &tiempo_jersey, Tiempo &tiemp
   else{
   inicio.seekg(91, ios::beg);getline(inicio,Tejido); inicio.seekg(103, ios::beg);getline(inicio,Tenido); inicio.seekg(116, ios::beg);getline(inicio,Acabado),inicio.seekg(149, ios::beg);getline(inicio,ConfeccionPJ); inicio.seekg(154, ios::beg);getline(inicio,ConfeccionCJ); inicio.seekg(159, ios::beg);getline(inicio,ConfeccionCuJ),inicio.seekg(170, ios::beg);getline(inicio,ConfeccionPP); inicio.seekg(175, ios::beg);getline(inicio,ConfeccionCP); inicio.seekg(180, ios::beg);getline(inicio,ConfeccionCuP),inicio.seekg(193, ios::beg);getline(inicio,ConfeccionPF); inicio.seekg(198, ios::beg);getline(inicio,ConfeccionCF); inicio.seekg(203, ios::beg);getline(inicio,ConfeccionCuF);
 
-  Tiempo tiempo_tejido,tiempo_tenido,tiempo_acabado,Jersey[3],Pique[3],Franela[3];
-  tiempo_tejido=(Tiempo)atof(Tejido.c_str());tiempo_tenido=(Tiempo)atof(Tenido.c_str());tiempo_acabado=(Tiempo)atof(Acabado.c_str());
+  Tiempo Jersey[3],Pique[3],Franela[3];
+  
   Jersey[0]=(Tiempo)atof(ConfeccionPJ.c_str()); Jersey[1]=(Tiempo)atof(ConfeccionCJ.c_str()); Jersey[2]=(Tiempo)atof(ConfeccionCuJ.c_str());
   Pique[0]=(Tiempo)atof(ConfeccionPP.c_str()); Pique[1]=(Tiempo)atof(ConfeccionCP.c_str()); Pique[2]=(Tiempo)atof(ConfeccionCuP.c_str());
   Franela[0]=(Tiempo)atof(ConfeccionPF.c_str()); Franela[1]=(Tiempo)atof(ConfeccionCF.c_str()); Franela[2]=(Tiempo)atof(ConfeccionCuF.c_str());
 
   for (size_t i=0;i<3;i++){
-        tiempo_jersey+=(((PesoTotal[jersey][i])/tiempo_tejido)+((PesoTotal[jersey][i])/tiempo_tenido)+((PesoTotal[jersey][i])/tiempo_acabado)+((PesoTotal[jersey][i])/Jersey[i]));}
+        tiempo_jersey+=(((PesoTotal[jersey][i])/((Tiempo)atof(Tejido.c_str())))+((PesoTotal[jersey][i])/((Tiempo)atof(Tenido.c_str())))+((PesoTotal[jersey][i])/((Tiempo)atof(Acabado.c_str())))+((PesoTotal[jersey][i])/Jersey[i]));}
 
   for (size_t i=0;i<3;i++){
-        tiempo_pique+=((PesoTotal[pique][i]/tiempo_tejido)+(PesoTotal[pique][i]/tiempo_tenido)+(PesoTotal[pique][i]/tiempo_acabado)+(PesoTotal[pique][i]/Pique[i]));}
+        tiempo_pique+=((PesoTotal[pique][i]/((Tiempo)atof(Tejido.c_str())))+(PesoTotal[pique][i]/((Tiempo)atof(Tenido.c_str())))+(PesoTotal[pique][i]/((Tiempo)atof(Acabado.c_str())))+(PesoTotal[pique][i]/Pique[i]));}
 
   for (size_t i=0;i<3;i++){
-        tiempo_franela+=((PesoTotal[franela][i]/tiempo_tejido)+(PesoTotal[franela][i]/tiempo_tenido)+(PesoTotal[franela][i]/tiempo_acabado)+(PesoTotal[franela][i]/Franela[i]));}
+        tiempo_franela+=((PesoTotal[franela][i]/((Tiempo)atof(Tejido.c_str())))+(PesoTotal[franela][i]/((Tiempo)atof(Tenido.c_str())))+(PesoTotal[franela][i]/((Tiempo)atof(Acabado.c_str())))+(PesoTotal[franela][i]/Franela[i]));}
 
     cout << "El tiempo de producción de Jersey es: " << tiempo_jersey/24 << " días." << endl;
     cout << "El tiempo de producción de Pique es: " << tiempo_pique/24 << " días." << endl;
@@ -110,6 +110,15 @@ void CalculoDeTiempos(float PesoTotal[3][3],Tiempo &tiempo_jersey, Tiempo &tiemp
 void CalculoDeMateriaPrima(float PesoTotal[3][3],float MateriasPrimas[3]){
 float MateriaPrimaJersey=0,MateriaPrimaPique=0,MateriaPrimaFranela=0;
 
+  fstream inicio("inicio.txt",ios::in);//Archivo en modo lectura  
+  
+  string ProduccionJersey,ProduccionPique,ProduccionFranela;
+
+  if (inicio.fail()){
+    cout << "El archivo no se pudo abrir";}
+  else{
+  inicio.seekg(220, ios::beg);getline(inicio,ProduccionJersey); inicio.seekg(235, ios::beg);getline(inicio,ProduccionPique); inicio.seekg(252, ios::beg);getline(inicio,ProduccionFranela);
+
     for (int i=0;i<3;i++)
         MateriaPrimaJersey+=PesoTotal[jersey][i];
 
@@ -119,42 +128,52 @@ float MateriaPrimaJersey=0,MateriaPrimaPique=0,MateriaPrimaFranela=0;
     for (int i=0;i<3;i++)
         MateriaPrimaFranela+=PesoTotal[franela][i];
 
-    cout << "La materia prima es " << MateriaPrimaJersey/0.7 << " Kg de hilo para Jersey." << endl ;
-    cout << "La materia prima es " << MateriaPrimaPique/0.5 << " Kg de hilo para Pique." << endl ;
-    cout << "La materia prima es " << MateriaPrimaFranela/0.3 << " Kg de hilo para Franela." << endl ;
+    cout << "La materia prima es " << MateriaPrimaJersey/((float)atof(ProduccionJersey.c_str())) << " Kg de hilo para Jersey." << endl ;
+    cout << "La materia prima es " << MateriaPrimaPique/((float)atof(ProduccionPique.c_str())) << " Kg de hilo para Pique." << endl ;
+    cout << "La materia prima es " << MateriaPrimaFranela/((float)atof(ProduccionFranela.c_str())) << " Kg de hilo para Franela." << endl ;
 
-    MateriasPrimas[jersey]=MateriaPrimaJersey/0.7;
-    MateriasPrimas[pique]=MateriaPrimaPique/0.5;
-    MateriasPrimas[franela]=MateriaPrimaFranela/0.3;
-
+    MateriasPrimas[jersey]=MateriaPrimaJersey/((float)atof(ProduccionJersey.c_str()));
+    MateriasPrimas[pique]=MateriaPrimaPique/((float)atof(ProduccionPique.c_str()));
+    MateriasPrimas[franela]=MateriaPrimaFranela/((float)atof(ProduccionFranela.c_str()));
+  }
 };
 
-void CalculoDeCostos(string tipo, Polo Polos, Camisa Camisas, Cuello Cuellos,float RowsMaterials[3],float &ganancia)
-{
-    float VentaJersey[3]={30,50,5};//{polos,camisas,cuellos}
-    float VentaPique[3]={60,75,10};//{polos,camisas,cuellos}
-    float VentaFranela[3]={60,80,15};//{polos,camisas,cuellos}
+void CalculoDeCostos(string tipo, Polo Polos, Camisa Camisas, Cuello Cuellos,float RowsMaterials[3],float &ganancia){
+
+  fstream inicio("inicio.txt",ios::in);//Archivo en modo lectura  
+  
+  string VentaPJ,VentaPP,VentaPF,VentaCJ,VentaCP,VentaCF,VentaCuJ,VentaCuP,VentaCuF,PrecioHilo;
+  
+  if (inicio.fail()){
+    cout << "El archivo no se pudo abrir";}
+  else{
+  inicio.seekg(272, ios::beg);getline(inicio,PrecioHilo); 
+  inicio.seekg(288, ios::beg);getline(inicio,VentaPJ); inicio.seekg(291, ios::beg);getline(inicio,VentaCJ);inicio.seekg(294, ios::beg);getline(inicio,VentaCuJ);
+
+  inicio.seekg(308, ios::beg);getline(inicio,VentaPP); inicio.seekg(311, ios::beg);getline(inicio,VentaCP);inicio.seekg(314, ios::beg);getline(inicio,VentaCuP);
+  
+  inicio.seekg(331, ios::beg);getline(inicio,VentaPF); inicio.seekg(334, ios::beg);getline(inicio,VentaCF);inicio.seekg(337, ios::beg);getline(inicio,VentaCuF);
 
     if(tipo=="Jersey"){
-        ganancia=(Polos.getPolo()*VentaJersey[0])+(Camisas.getCamisa()*VentaJersey[1])+(Cuellos.getCuello()*VentaJersey[2]);
+        ganancia=(Polos.getPolo()*((float)atof(VentaPJ.c_str())))+(Camisas.getCamisa()*((float)atof(VentaCJ.c_str())))+(Cuellos.getCuello()*((float)atof(VentaCuJ.c_str())));
 
-        ganancia-=(RowsMaterials[jersey]*10.0);
+        ganancia-=(RowsMaterials[jersey]*((float)atof(PrecioHilo.c_str())));
         cout << "La ganancia por Jerseys es " <<ganancia <<" soles." << endl;
     }
 
     if(tipo=="Pique"){
-        ganancia=(Polos.getPolo()*VentaPique[0])+(Camisas.getCamisa()*VentaPique[1])+(Cuellos.getCuello()*VentaPique[2]);
+        ganancia=(Polos.getPolo()*((float)atof(VentaPP.c_str())))+(Camisas.getCamisa()*((float)atof(VentaCP.c_str())))+(Cuellos.getCuello()*((float)atof(VentaCuP.c_str())));
 
-        ganancia-=(RowsMaterials[pique]*10.0);
+        ganancia-=(RowsMaterials[pique]*((float)atof(PrecioHilo.c_str())));
         cout << "La ganancia por Piques es " <<ganancia <<" soles." << endl;
     }
 
     if(tipo=="Franela"){
-        ganancia=(Polos.getPolo()*VentaFranela[0])+(Camisas.getCamisa()*VentaFranela[1])+(Cuellos.getCuello()*VentaFranela[2]);
-        ganancia-=(RowsMaterials[franela]*10.0);
+        ganancia=(Polos.getPolo()*((float)atof(VentaPF.c_str())))+(Camisas.getCamisa()*((float)atof(VentaCF.c_str())))+(Cuellos.getCuello()*((float)atof(VentaCuF.c_str())));
+        ganancia-=(RowsMaterials[franela]*((float)atof(PrecioHilo.c_str())));
         cout << "La ganancia por Franelas es " << ganancia <<" soles." << endl;
     }   
-
+  }
 };
 
 void CalendarioFechaEntrega(float tiempo_dias, int &day,int &month, int &year)
@@ -212,7 +231,8 @@ void CalendarioFechaEntrega(float tiempo_dias, int &day,int &month, int &year)
 
 }
 
-void Salidas(float &tiempo_jersey,float &tiempo_pique,float &tiempo_franela){
+void Salidas(float &tiempo_jersey,float &tiempo_pique,float &tiempo_franela)
+{
 
   int day=0,month=0,year=0;
   fstream pedido("pedido.txt",ios::out);
@@ -231,6 +251,17 @@ void Salidas(float &tiempo_jersey,float &tiempo_pique,float &tiempo_franela){
 };
 
 int main(){
+
+   fstream inicio("inicio.txt",ios::in);//Archivo en modo lectura  
+  
+  string VentaPJ,VentaPP,VentaPF,VentaCJ,VentaCP,VentaCF,VentaCuJ,VentaCuP,VentaCuF,PrecioHilo;
+  
+  inicio.seekg(272, ios::beg);getline(inicio,PrecioHilo); 
+  inicio.seekg(288, ios::beg);getline(inicio,VentaPJ); inicio.seekg(291, ios::beg);getline(inicio,VentaCJ);inicio.seekg(294, ios::beg);getline(inicio,VentaCuJ);
+
+  inicio.seekg(308, ios::beg);getline(inicio,VentaPP); inicio.seekg(311, ios::beg);getline(inicio,VentaCP);inicio.seekg(314, ios::beg);getline(inicio,VentaCuP);
+  
+  inicio.seekg(331, ios::beg);getline(inicio,VentaPF); inicio.seekg(334, ios::beg);getline(inicio,VentaCF);inicio.seekg(337, ios::beg);getline(inicio,VentaCuF);
   
  float PesosTotales[3][3];
  float MateriasPrimas[3];
@@ -253,6 +284,7 @@ int main(){
  CalculoDeCostos("Franela",Polo3,Camisa3,Cuello3,MateriasPrimas,ganancia_franela); //calculo costos(...), funci´on que calcula los costos y estima la ganancia por tipo de tela
 
  Salidas(tiempo_jersey,tiempo_pique,tiempo_franela);//salidas(...) , funcion que genera el  archivo de salida (’pedido.txt’) con fechas de entrega programadas
+ 
 
  if(ganancia_jersey>ganancia_pique and ganancia_jersey>ganancia_franela){
   cout << "Se sugiere empezar por la fabricación de Jersey. ";
