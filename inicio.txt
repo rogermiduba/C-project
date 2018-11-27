@@ -31,3 +31,23 @@ Franela
 0.25
 0.50
 0.05
+Hilo Jersey
+0.7
+Hilo Pique
+0.5
+Hilo Franela
+0.3
+Precio del Hilo
+10
+Venta Jersey
+30
+50
+5
+Venta Pique
+60
+75
+10
+Venta Franela
+60
+80
+15
