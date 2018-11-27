@@ -129,31 +129,30 @@ float MateriaPrimaJersey=0,MateriaPrimaPique=0,MateriaPrimaFranela=0;
 
 };
 
-void CalculoDeCostos(string tipo, Polo Polos, Camisa Camisas, Cuello Cuellos,float RowsMaterials[3])
-{float ganancia_jersey=0,ganancia_pique=0,ganancia_franela=0;
-
+void CalculoDeCostos(string tipo, Polo Polos, Camisa Camisas, Cuello Cuellos,float RowsMaterials[3],float &ganancia)
+{
     float VentaJersey[3]={30,50,5};//{polos,camisas,cuellos}
     float VentaPique[3]={60,75,10};//{polos,camisas,cuellos}
     float VentaFranela[3]={60,80,15};//{polos,camisas,cuellos}
 
     if(tipo=="Jersey"){
-        ganancia_jersey=(Polos.getPolo()*VentaJersey[0])+(Camisas.getCamisa()*VentaJersey[1])+(Cuellos.getCuello()*VentaJersey[2]);
+        ganancia=(Polos.getPolo()*VentaJersey[0])+(Camisas.getCamisa()*VentaJersey[1])+(Cuellos.getCuello()*VentaJersey[2]);
 
-        ganancia_jersey-=(RowsMaterials[jersey]*10.0);
-        cout << "La ganancia por Jerseys es " <<ganancia_jersey <<" soles." << endl;
+        ganancia-=(RowsMaterials[jersey]*10.0);
+        cout << "La ganancia por Jerseys es " <<ganancia <<" soles." << endl;
     }
 
     if(tipo=="Pique"){
-        ganancia_pique=(Polos.getPolo()*VentaPique[0])+(Camisas.getCamisa()*VentaPique[1])+(Cuellos.getCuello()*VentaPique[2]);
+        ganancia=(Polos.getPolo()*VentaPique[0])+(Camisas.getCamisa()*VentaPique[1])+(Cuellos.getCuello()*VentaPique[2]);
 
-        ganancia_pique-=(RowsMaterials[pique]*10.0);
-        cout << "La ganancia por Piques es " <<ganancia_pique <<" soles." << endl;
+        ganancia-=(RowsMaterials[pique]*10.0);
+        cout << "La ganancia por Piques es " <<ganancia <<" soles." << endl;
     }
 
     if(tipo=="Franela"){
-        ganancia_franela=(Polos.getPolo()*VentaFranela[0])+(Camisas.getCamisa()*VentaFranela[1])+(Cuellos.getCuello()*VentaFranela[2]);
-        ganancia_franela-=(RowsMaterials[franela]*10.0);
-        cout << "La ganancia por Franelas es " << ganancia_franela <<" soles." << endl;
+        ganancia=(Polos.getPolo()*VentaFranela[0])+(Camisas.getCamisa()*VentaFranela[1])+(Cuellos.getCuello()*VentaFranela[2]);
+        ganancia-=(RowsMaterials[franela]*10.0);
+        cout << "La ganancia por Franelas es " << ganancia <<" soles." << endl;
     }   
 
 };
@@ -235,7 +234,8 @@ int main(){
   
  float PesosTotales[3][3];
  float MateriasPrimas[3];
- float tiempo_jersey=0;float tiempo_pique=0; float tiempo_franela=0;
+ float tiempo_jersey=0, tiempo_pique=0, tiempo_franela=0;
+ float ganancia_jersey=0,ganancia_pique=0,ganancia_franela=0;
  Polo Polo1("Jersey"); Camisa Camisa1("Jersey");Cuello Cuello1("Jersey"); 
  Polo Polo2("Pique"); Camisa Camisa2("Pique"); Cuello Cuello2("Pique");
  Polo Polo3("Franela"); Camisa Camisa3("Franela");Cuello Cuello3("Franela");
@@ -248,11 +248,35 @@ int main(){
  
  CalculoDeMateriaPrima(PesosTotales,MateriasPrimas);//calculo materia prima(...), funcion que calcula los requerimientos de materia prima (hilo) por tipo de tela.  //I.e. Materia prima=Kg tela / rendimiento
 
- CalculoDeCostos("Jersey",Polo1,Camisa1,Cuello1,MateriasPrimas);
- CalculoDeCostos("Pique",Polo2,Camisa2,Cuello2,MateriasPrimas); 
- CalculoDeCostos("Franela",Polo3,Camisa3,Cuello3,MateriasPrimas); //calculo costos(...), funci´on que calcula los costos y estima la ganancia por tipo de tela
+ CalculoDeCostos("Jersey",Polo1,Camisa1,Cuello1,MateriasPrimas,ganancia_jersey);
+ CalculoDeCostos("Pique",Polo2,Camisa2,Cuello2,MateriasPrimas,ganancia_pique); 
+ CalculoDeCostos("Franela",Polo3,Camisa3,Cuello3,MateriasPrimas,ganancia_franela); //calculo costos(...), funci´on que calcula los costos y estima la ganancia por tipo de tela
 
- Salidas(tiempo_jersey,tiempo_pique,tiempo_franela);//salidas(...) , funci´on que genera el a
+ Salidas(tiempo_jersey,tiempo_pique,tiempo_franela);//salidas(...) , funcion que genera el  archivo de salida (’pedido.txt’) con fechas de entrega programadas
+
+ if(ganancia_jersey>ganancia_pique and ganancia_jersey>ganancia_franela){
+  cout << "Se sugiere empezar por la fabricación de Jersey. ";
+  if (ganancia_pique>ganancia_franela)
+    cout << "Seguidamente la fabricación de Pique y por último la de Franela." << endl ;
+  else
+    cout << "Seguidamente la fabricación de Franela y por último la de Pique." << endl ;
+ }
+
+ if(ganancia_pique>ganancia_jersey && ganancia_pique>ganancia_franela){
+  cout << "Se sugiere empezar por la fabricación de Pique. ";
+  if (ganancia_jersey>ganancia_franela)
+    cout << "Seguidamente la fabricación de Jersey y por último la de Franela." << endl ;
+  else
+    cout << "Seguidamente la fabricación de Franela y por último la de Jersey." << endl ;
+ }
+
+  if(ganancia_franela>ganancia_pique && ganancia_franela>ganancia_jersey){
+  cout << "Se sugiere empezar por la fabricación de Franela. ";
+  if (ganancia_jersey>ganancia_pique)
+    cout << "Seguidamente la fabricación de Jersey y por último la de Pique." << endl ;
+  else
+    cout << "Seguidamente la fabricación de Pique y por último la de Jersey." << endl ;
+  }
 
   return 0;
 }
