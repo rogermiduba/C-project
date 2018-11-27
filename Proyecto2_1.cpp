@@ -251,17 +251,6 @@ void Salidas(float &tiempo_jersey,float &tiempo_pique,float &tiempo_franela)
 };
 
 int main(){
-
-   fstream inicio("inicio.txt",ios::in);//Archivo en modo lectura  
-  
-  string VentaPJ,VentaPP,VentaPF,VentaCJ,VentaCP,VentaCF,VentaCuJ,VentaCuP,VentaCuF,PrecioHilo;
-  
-  inicio.seekg(272, ios::beg);getline(inicio,PrecioHilo); 
-  inicio.seekg(288, ios::beg);getline(inicio,VentaPJ); inicio.seekg(291, ios::beg);getline(inicio,VentaCJ);inicio.seekg(294, ios::beg);getline(inicio,VentaCuJ);
-
-  inicio.seekg(308, ios::beg);getline(inicio,VentaPP); inicio.seekg(311, ios::beg);getline(inicio,VentaCP);inicio.seekg(314, ios::beg);getline(inicio,VentaCuP);
-  
-  inicio.seekg(331, ios::beg);getline(inicio,VentaPF); inicio.seekg(334, ios::beg);getline(inicio,VentaCF);inicio.seekg(337, ios::beg);getline(inicio,VentaCuF);
   
  float PesosTotales[3][3];
  float MateriasPrimas[3];
@@ -285,7 +274,6 @@ int main(){
 
  Salidas(tiempo_jersey,tiempo_pique,tiempo_franela);//salidas(...) , funcion que genera el  archivo de salida (’pedido.txt’) con fechas de entrega programadas
  
-
  if(ganancia_jersey>ganancia_pique and ganancia_jersey>ganancia_franela){
   cout << "Se sugiere empezar por la fabricación de Jersey. ";
   if (ganancia_pique>ganancia_franela)
